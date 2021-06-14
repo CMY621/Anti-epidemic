@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>游戏关卡</title>
+    <link rel="stylesheet" href="../css/button.css">
+    <link rel="stylesheet" href="../css/game.css">
+</head>
+<body>
+
+    <div class="firstButton Button">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div>第一关</div>
+        <div style="font-size:17px;line-height: 5px;color: yellowgreen;">开始游戏</div>
+        <div style="font-size:12px;">（消灭病毒，响应号召，接受疫苗增加抵抗力！！！）</div>
+    </div>
+    <div class="secondButton Button">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div>第二关</div>
+        <div style="font-size:17px;line-height: 5px;color: rgb(253, 136, 115);">开始游戏</div>
+        <div style="font-size:12px;">（消灭病毒，响应号召，接受疫苗增加抵抗力！！！）</div>
+    </div>
+    <div class="thirdButton Button">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div>第三关</div>
+        <div style="font-size:17px;line-height: 5px;color: skyblue;">开始游戏</div>
+        <div style="font-size:12px;">（消灭病毒，响应号召，接受疫苗增加抵抗力！！！）</div>
+    </div>
+    
+    <script>
+        let firstButton = document.querySelector(".firstButton");
+        let secondButton = document.querySelector(".secondButton");
+        let thirdButton = document.querySelector(".thirdButton");
+        
+        //第一关
+        firstButton.onmouseover = function(){
+            firstButton.className = 'firstButton Button hoverclass';
+        }
+        firstButton.onmouseout = function(){
+            firstButton.className = 'firstButton Button';
+        }
+        firstButton.onclick = function(){
+            window.open("firstPass.html");
+        }
+
+        //第二关
+        secondButton.onmouseover = function(){
+            secondButton.className = 'secondButton Button hoverclass';
+        }
+        secondButton.onmouseout = function(){
+            secondButton.className = 'secondButton Button';
+        }
+        secondButton.onclick = function(){
+            window.open("secondPass.html");
+        }
+
+        //第三关
+        thirdButton.onmouseover = function(){
+            thirdButton.className = 'thirdPass Button hoverclass';
+        }
+        thirdButton.onmouseout = function(){
+            thirdButton.className = 'thirdPass Button';
+        }
+        thirdButton.onclick = function(){
+            window.open("thirdPass.html");
+        }
+
+    </script>
+</body>
+</html>

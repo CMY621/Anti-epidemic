@@ -1,0 +1,95 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background: #031321;
+    font-family: consolas;
+    overflow: hidden;
+}
+
+/* 
+病毒和疫苗样式：
+*/
+.virus,.vaccines{
+    width: 200px;
+    height: 200px;
+    background-image: url('../images/virus.png');
+    background-size: 200px 200px;
+    background-repeat: no-repeat;
+    position: absolute;
+}
+.virus>span,.vaccines>span{
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    font-size: 60px;
+    color: yellowgreen;
+    font-weight: bold;
+    text-shadow: 5px 5px 5px #3e437a;
+}
+
+.virus>span{
+    color: rgb(0, 183, 255);
+}
+
+.vaccines{
+    background-image: url('../images/vaccines.png');
+}
+
+/*
+抵抗力和时间的显示：
+*/
+.show_score,.show_time{
+    position: fixed;
+    top: 0;
+    padding: 10px;
+    color: white;
+    font-size: 30px;
+    background: #031321;
+    border: 1px solid rgb(37, 132, 240);
+    border-radius: 5px;
+    display: none;
+    box-shadow: 0 0 40px rgb(0, 183, 255);
+    z-index: 100;
+}
+.show_score{
+    left: 0;
+}
+.show_time{
+    right: 0;
+}
+
+/*
+游戏说明面板,和结束面板的样式：
+*/
+.show_Game_Description,.gameOver{
+    width: 600px;
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    color: white;
+    font-size: 30px;
+    transform: translateX(-300px);
+    border: 1px solid skyblue;
+    border-radius: 10px;
+    padding: 50px;
+    display: none;
+    z-index: 1000;
+    line-height: 30px;
+    box-shadow: 0 0 40px rgb(0, 183, 255);
+}
+.gameOver{
+    text-align: center;
+    line-height: 50px;
+    z-index: 100;
+    background: #031321;
+}
+.show_Game_Description{
+    font-size: 17px;
+    background-color: rgb(43, 73, 85);
+}

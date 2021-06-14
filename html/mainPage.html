@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抗疫大作战</title>
+    <link rel="stylesheet" href="../css/button.css">
+    <link rel="stylesheet" href="../css/game.css">
+</head>
+<body>
+    <div class="show_Game_Description">
+        <h3>1、游戏背景</h3>
+        <p style="margin-bottom: 30px;text-indent: 2em;">
+            <span style="color: rgb(253, 136, 115);font-weight: 700;">"抗疫大作战"</span>
+            是一款
+            <span style="color: yellowgreen;font-weight: 700;">“响应国家号召接种疫苗，防范病毒”</span>
+            为主题的打字游戏。通过在规定的时间内拾取尽可能多的疫苗来增强玩家的抵抗力，同时也要阻挡病毒的入侵，最终按照抵抗力的高低结算游戏。
+        </p>
+        <h3>2、游戏规则</h3>
+        <p style="text-indent: 2em;">
+            玩家点击“开始游戏”按钮即可进入游戏界面。病毒和疫苗上都有字母，键盘上敲出字母即可击杀病毒和获取疫苗。击杀病毒不记分，被病毒入侵扣一分，获取疫苗加5分，初始拥有“抵抗力”为50点，时间为30秒。请在规定时间内抵御病毒的入侵，获取疫苗，加强自己的免疫力吧！
+        </p>
+    </div>
+    <!-- 时间来不及了，本来想把这个酷炫按钮弄成组件的，这里为了方便直接写3个吧-_-|| -->
+    <div class="beginButton Button">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div>start the game</div>
+        <div style="font-size:17px;line-height: 5px;color: yellowgreen;">开始游戏</div>
+        <div style="font-size:12px;">（消灭病毒，响应号召，接受疫苗增加抵抗力！！！）</div>
+    </div>
+    <div class="explainButton Button">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div>Game description</div>
+        <div style="font-size:17px;line-height: 5px;color: rgb(253, 136, 115);">游戏说明</div>
+        <div style="font-size:12px;">（游戏背景：构建全民免疫屏障，阻断新冠病毒传播！）</div>
+    </div>
+    <div class="mapButton Button">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div>Epidemic map</div>
+        <div style="font-size:17px;line-height: 5px;color: skyblue;">疫情地图</div>
+        <div style="font-size:12px;">（鼠标移动此处点亮黑夜，为抗疫大作战点亮明灯）</div>
+    </div>
+<script>
+    let beginButton = document.querySelector(".beginButton");
+    let explainButton = document.querySelector(".explainButton");
+    let mapButton = document.querySelector(".mapButton");
+    let show_Game_Description = document.querySelector(".show_Game_Description");
+    //开始按钮
+    beginButton.onmouseover = function(){
+        beginButton.className = 'beginButton Button hoverclass';
+    }
+    beginButton.onmouseout = function(){
+        beginButton.className = 'beginButton Button';
+    }
+    beginButton.onclick = function(){
+        window.open("gameBegin.html");
+    }
+
+    // 说明按钮
+    explainButton.onmouseover = function(){
+        explainButton.className = 'explainButton Button hoverclass';
+    }
+    explainButton.onmouseout = function(){
+        explainButton.className = 'explainButton Button';
+    }
+    explainButton.onclick = function(){
+        // 展示说明界面
+        show_Game_Description.style.display = 'block';
+    }
+    show_Game_Description.onclick = function(){
+        show_Game_Description.style.display = 'none';
+    }
+
+    // 地图按钮
+    mapButton.onmouseover = function(){
+        mapButton.className = 'mapButton Button hoverclass';
+    }
+    mapButton.onmouseout = function(){
+        mapButton.className = 'mapButton Button';
+    }
+    mapButton.onclick = function(){
+        window.open("map.html");
+    }
+    // 创建“飞行物”的类：
+</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第三关</title>
+    <link rel="stylesheet" href="../css/button.css">
+    <link rel="stylesheet" href="../css/game.css">
+</head>
+<body>
+    <div class="gameOver"></div>
+    <div class="show_score">抵抗力：50</div>
+    <div class="show_time">时间：30 s</div>
+
+    <div class="beginButton Button gamebutton">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div>The Third Pass</div>
+        <div style="font-size:20px;line-height: 5px;color: rgb(253, 136, 115);">Ready GO！</div>
+        <div style="font-size:12px;">（消灭病毒，响应号召，接受疫苗增加抵抗力！！！）</div>
+    </div>
+<script>
+    let beginButton = document.querySelector(".beginButton");
+    let gameOver = document.querySelector(".gameOver");
+    let list = []; // 定义数组保存所有创建出来的“病毒”对象（因为字母是随机生成的，所以）
+
+    let score = 50;
+    let time = 30;
+
+    beginButton.onmouseover = function(){
+        beginButton.className = 'beginButton Button hoverclass gamebutton';
+    }
+    beginButton.onmouseout = function(){
+        beginButton.className = 'beginButton Button gamebutton';
+    }
+
+    beginButton.onclick = function () {
+        beginButton.parentNode.removeChild(beginButton);
+        // 开始游戏，生成“病毒”：(可以根据定时器的时间来控制生成的时间间隔，这里就可以用来做难度控制)
+        let begin_virus = setInterval(function () {
+            let virus =  new flyObj("virus");
+            virus.fly();
+            list.push(virus);
+        }, 500);
+
+        // 生成“疫苗”
+        let begin_vaccines = setInterval(function () {
+            let vaccines =  new flyObj("vaccines");
+            // 重写fly，疫苗出去不能扣分
+            vaccines.fly = function (){
+                let offset = parseInt(this.oDiv.style.top);
+                let timer = window.setInterval(()=>{
+                    offset -= 10;
+                    if(offset <= -300){
+                        this.bomb();
+                    }
+                    this.oDiv.style.top = offset + "px";
+                }, 100);
+                this.timer = timer;
+            };
+            vaccines.fly();
+            list.push(vaccines);
+        }, 3000);
+
+        let show_score = document.querySelector(".show_score");
+        let show_time = document.querySelector(".show_time");
+        let show_gameOver = document.querySelector(".gameOver");
+        show_score.style.display = "block";
+        show_time.style.display = "block";
+        let time_setInterval = setInterval(function () {
+            time--;
+            show_time.innerHTML = '时间：' + time + 's';
+            if(time <=4 ){
+                // 时间到，清除病毒疫苗定时器
+                clearInterval(begin_virus);
+                clearInterval(begin_vaccines);
+            }
+            if(time <= 0){
+                // 展示“游戏结束”面板,同时关闭“抵抗力”的显示
+                clearInterval(time_setInterval);
+                show_gameOver.style.display = "block";
+                show_gameOver.innerHTML = "游戏已结束，您的最终抵抗力是：" + score + "<br/>点击这里返回主页";
+                show_score.style.display = "none";
+            }
+        }, 1000);
+    };
+    
+
+    // 创建“飞行物”的类：
+    class flyObj{
+        constructor(virus_or_vaccines){
+            let oDiv = document.createElement("div");
+            oDiv.style.top = window.innerHeight + "px";
+            // 200是“病毒”的宽，减去200，这样自动生成的时候就不会产生横向滚动条
+            oDiv.style.left = Math.random() * (window.innerWidth - 210) + "px";
+            // 字母：
+            let oSpan = document.createElement("span");
+            let key = this.generateKey();
+            oSpan.innerText = key;
+            // 添加key类名，为后面删除提供类名
+            oDiv.className = virus_or_vaccines + " " + key;
+            oDiv.appendChild(oSpan);
+            document.body.appendChild(oDiv);
+            this.oDiv = oDiv;
+        }
+
+        // “病毒”消失函数
+        bomb(){
+            clearInterval(this.timer);
+            document.body.removeChild(this.oDiv);
+        }
+        fly(){
+            // 获取“病毒”当前的top值
+            let offset = parseInt(this.oDiv.style.top);
+            // 开启定时器不断修改“病毒”位置
+            let timer = window.setInterval(()=>{
+                offset -= 10;
+                if(offset <= -300){
+                    // 当“病毒”超出界面时，要消除，不然dom元素越来越多这就会有性能问题
+                    // 超出后计数
+                    this.bomb();
+                    // “病毒”逃离，计数
+                    score--;
+                    let show_score = document.querySelector(".show_score");
+                    show_score.innerHTML = '抵抗力：' + score;
+                }
+                this.oDiv.style.top = offset + "px";
+            }, 100);
+            this.timer = timer;
+        }
+
+        // 字母随机生成
+        generateKey(){
+            // 随机产生65-90的一个数（大写的26个字母的Unicode值）
+            let num = Math.floor(Math.random() * (90 - 65 + 1)) + 65;
+            // 将 Unicode 编码转为字母
+            return String.fromCharCode(num);
+        }
+    }
+
+    document.body.onkeydown = function (event) {
+        // 获取键盘按下的字母并转为大写
+        let key = event.key.toUpperCase();
+        let oDiv = document.querySelector("." + key);
+        // 根据div找到这个div对应数组中的位置
+        let currentIndex = list.findIndex(function (currentValue) {
+            return currentValue.oDiv === oDiv;
+        });
+        if(currentIndex === -1){
+            return;
+        }
+        // 根据位置取出对应的对象
+        let currentFlyObj = list[currentIndex];
+        // console.log(currentFlyObj.oDiv.className.slice(0,3));
+        // vir则为病毒，vac则为疫苗：
+        let name = currentFlyObj.oDiv.className.slice(0,3);
+        // 如果是疫苗，则加5分：
+        if(name == 'vac'){
+            score = score + 5;
+            // 更新数据
+            let show_score = document.querySelector(".show_score");
+            show_score.innerHTML = '抵抗力：' + score;
+        }
+        // 删除
+        currentFlyObj.bomb();
+        list.splice(currentIndex, 1);
+    }
+
+    // 返回初始界面
+    gameOver.onclick = function(){
+        history.go(0);
+    }
+</script>
+</body>
+</html>
